@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8" name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Encriptador Alura</title>
+        <link rel = "stylesheet" href = "reset.css">
+        <link rel = "stylesheet" href = "style-encriptador.css">
+    </head>
+
+    <body>
+        <header>
+            <img class = "imagen-logo" src = "imagenes/Vector.png">
+        </header>
+
+        <main>
+            
+            <label for = "texto"><textarea placeholder = "Ingrese el texto aquí" rows = "6" cols = "30" id = "texto" class = "texto-escrito" autofocus></textarea></label>
+            
+            <section class = "box-rectanguloderecha">
+                <p id = "mensaje-escrito"></p>
+                <div id = "box-esconder">
+                    <img class = "imagen-persona" src = "imagenes/Muñeco.png">
+                    <div class = "textos-rectangulo">
+                        <p id = "mensaje1">Ningún mensaje fue encontrado</p>
+                        <p id = "mensaje2">Ingresa el texto que desees encriptar o desencriptar</p>
+                    </div>
+                </div>
+                <input type = "submit" value = "Copiar" class = "copiar" id = texto_copiado>
+            </section>
+
+            <section class = "box-aviso">
+                <img class = "imagen-exclamacion" src = "imagenes/bi_exclamation-circle-fill.png"><p>Sólo letras minúsculas y sin acento</p>
+            </section>
+
+            <section class = "box-botones">
+                <input type = "submit" value = "Encriptar" class = "encriptar">
+                <input type = "submit" value = "Desencriptar" class = "desencriptar">
+            </section>
+
+        </main>
+        
+        <footer>
+            <img class = "imagen-sebas" src = "imagenes/sebastian.jpg">
+            <p>&#169; Copyright Sebastián Rodríguez Báez</p>
+        </footer>
+
+        <!--Código JS para encriptar/desencriptar-->
+        <script>
+            var visuales = document.getElementById('box-esconder');
+            var mensaje = document.getElementById("mensaje-escrito")
+
+            document.getElementById('texto').value='';
+            // ------F U N C I O N E S------ 
+            function encriptar(){
+                if(texto.value != ""){
+                    visuales.style.display = "none";
+                    let escrito = texto.value.split('');
+                    let codificado = [];
+                    for(var posicion = 0; posicion <= escrito.length; posicion++){
+                        if(escrito[posicion] == "a"){
+                            codificado[posicion] = "ai";
+                        }
+                        else if(escrito[posicion] == "e"){
+                            codificado[posicion] = "enter";
+                        }
+                        else if(escrito[posicion] == "i"){
+                            codificado[posicion] = "imes";
+                        }
+                        else if(escrito[posicion] == "o"){
+                            codificado[posicion] = "ober";
+                        }
+                        else if(escrito[posicion] == "u"){
+                            codificado[posicion] = "ufat";
+                        }
+                        else{codificado[posicion] = escrito[posicion]}
+                    }
+                    
+                    mensaje_codificado = codificado.join('');
+                    mensaje.innerHTML = mensaje_codificado;
+                    document.getElementById('texto').value='';
+                    
+                } 
+
+                else{
+                    visuales.style.display = "block";
+                    mensaje.innerHTML = "";
+                }
+            }
+
+            var encriptacion = document.querySelector(".encriptar");
+            encriptacion.onclick = encriptar;
+
+            function desencriptar(){
+                if(texto.value != ""){
+                    visuales.style.display = "none";
+                    let escrito = texto.value.split('');
+                    let decodificado = [];
+                    var posicion = 0;
+                    while(posicion <= escrito.length){
+                        if(escrito[posicion] == "a"){
+                            decodificado[posicion] = "a"
+                            posicion = posicion + 2;
+                        }
+                        else if(escrito[posicion] == "e"){
+                            decodificado[posicion] = "e"
+                            posicion = posicion + 5;
+                        }
+                        else if(escrito[posicion] == "i"){
+                            decodificado[posicion] = "i"
+                            posicion = posicion + 4;
+                        }
+                        else if(escrito[posicion] == "o"){
+                            decodificado[posicion] = "o"
+                            posicion = posicion + 4;
+                        }
+                        else if(escrito[posicion] == "u"){
+                            decodificado[posicion] = "u"
+                            posicion = posicion + 4;
+                        }
+                        else{
+                            decodificado[posicion] = escrito[posicion]
+                            posicion = posicion + 1;
+                        }
+                    }
+                
+                    mensaje_decodificado = decodificado.join('');
+                    mensaje.innerHTML = mensaje_decodificado;
+                    document.getElementById('texto').value='';
+                }
+            }
+
+            var decriptacion = document.querySelector(".desencriptar");
+            decriptacion.onclick = desencriptar;
+            
+            //NUEVA LINEA
+            texto_copiado.addEventListener("click", () => {
+                navigator.clipboard.writeText(document.getElementById("mensaje-escrito").innerHTML)
+            })
+
+        </script>
+
+    </body>
+</html>
